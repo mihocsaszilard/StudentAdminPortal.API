@@ -25,10 +25,10 @@ namespace StudentAdminPortal.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("PhysicalAdress")
+                    b.Property<string>("PhysicalAddress")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PostalAdress")
+                    b.Property<string>("PostalAddress")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("StudentId")
