@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
@@ -12,6 +13,7 @@ using StudentAdminPortal.API.DataModels;
 using StudentAdminPortal.API.Repositories;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -46,6 +48,7 @@ namespace StudentAdminPortal.API
                 options.UseSqlServer(Configuration.GetConnectionString("StudentAdminPortalDb")));
 
             services.AddScoped<IStudentRepository, SqlStudentRepository>();
+            services.AddScoped<IImageRepository, LocalStorageImgRepository>();
 
             services.AddSwaggerGen(c =>
             {
@@ -53,6 +56,7 @@ namespace StudentAdminPortal.API
             });
 
             services.AddAutoMapper(typeof(Startup).Assembly);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,6 +70,12 @@ namespace StudentAdminPortal.API
             }
 
             app.UseHttpsRedirection();
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "Resources")),
+                RequestPath = "/Resources"
+            });
 
             app.UseRouting();
 
