@@ -97,21 +97,38 @@ namespace StudentAdminPortal.API.Controllers
         [Route("[controller]/{studentId:guid}/upload-img")]
         public async Task<IActionResult> UploadImg([FromRoute] Guid studentId, IFormFile profileImg)
         {
-            // Check if student exists
-            if (await studentRepository.Exists(studentId))
+
+            var validExtensions = new List<string>
             {
-                var fileName = Guid.NewGuid() + Path.GetExtension(profileImg.FileName);
+                ".jpeg",
+                ".jpg",
+                ".png",
+                ".gif"
+            };
 
-                // Upload img to localStorage
-                var fileImgPath = await imageRepository.Upload(profileImg, fileName);
+            if (profileImg != null && profileImg.Length > 0)
+            {
+                var extentsion = Path.GetExtension(profileImg.FileName);
 
-                if(await studentRepository.UpdateProfileImg(studentId, fileImgPath))
+                if (validExtensions.Contains(extentsion))
                 {
-                    return Ok(fileImgPath);
-                }
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error uploading image!");
+                    // Check if student exists
+                    if (await studentRepository.Exists(studentId))
+                    {
+                        var fileName = Guid.NewGuid() + Path.GetExtension(profileImg.FileName);
+
+                        // Upload image to localStorage
+                        var fileImgPath = await imageRepository.Upload(profileImg, fileName);
+
+                        if (await studentRepository.UpdateProfileImg(studentId, fileImgPath))
+                        {
+                            return Ok(fileImgPath);
+                        }
+                        return StatusCode(StatusCodes.Status500InternalServerError, "Error uploading image!");
+                    }
+                };
             }
-            return NotFound();
+            return BadRequest("Wrong image extension, please use: " + validExtensions + " formats!");
         }
 
     }

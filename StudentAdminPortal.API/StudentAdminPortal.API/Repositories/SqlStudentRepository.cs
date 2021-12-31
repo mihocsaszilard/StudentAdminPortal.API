@@ -84,7 +84,7 @@ namespace StudentAdminPortal.API.Repositories
 
             if(student != null)
             {
-                student.ProfileImgUrl = profimeImgUrl;
+                student.ProfileImgUrl = profimeImgUrl.Substring(119, 54);
                 await context.SaveChangesAsync();
                 return true;
             }
