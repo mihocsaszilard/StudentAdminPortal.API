@@ -128,7 +128,7 @@ namespace StudentAdminPortal.API.Controllers
                     }
                 };
             }
-            return BadRequest("Wrong image extension, please use: " + validExtensions + " formats!");
+            return BadRequest("Wrong image extension!");
         }
 
     }
