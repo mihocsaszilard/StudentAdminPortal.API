@@ -1,0 +1,22 @@
+
+{
+    "region" : "eu-central-1",
+    "configuration" : "Debug",
+    "framework"     : "net5.0",
+    "self-contained" : false,
+    "application"    : "StudentAdminPortalAPI",
+    "environment"    : "StudentAdminPortalAPI-dev",
+    "enable-xray"    : false,
+    "enhanced-health-type" : "basic",
+    "additional-options"   : "\"aws:autoscaling:launchconfiguration,SecurityGroups\"=\"sg-006f285915d29d1b2,sg-0fd2f454807fe8e12\";\"aws:ec2:vpc,Subnets\"=\"subnet-093ab17a9115f1ffb\";\"aws:ec2:vpc,ELBSubnets\"=\"subnet-093ab17a9115f1ffb,subnet-062ff58cf38d5f38d,subnet-0c74974f599a0e63f\"",
+    "solution-stack"       : "64bit Amazon Linux 2 v2.2.9 running .NET Core",
+    "environment-type"     : "LoadBalanced",
+    "loadbalancer-type"    : "application",
+    "cname"                : "studentadminportalapi-dev",
+    "instance-type"        : "t3a.nano",
+    "key-pair"             : "",
+    "health-check-url"     : "/",
+    "instance-profile"     : "aws-elasticbeanstalk-ec2-role",
+    "service-role"         : "aws-elasticbeanstalk-service-role",
+    "proxy-server"         : "nginx"
+}

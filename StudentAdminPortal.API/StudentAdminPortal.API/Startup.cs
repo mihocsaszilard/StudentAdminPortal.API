@@ -37,7 +37,7 @@ namespace StudentAdminPortal.API
             {
                 options.AddPolicy("angularApplication", (builder) =>
                 {
-                    builder.WithOrigins("http://localhost:4200")
+                    builder.WithOrigins("http://localhost:4200", "http://studentadminportalapi-dev.eu-central-1.elasticbeanstalk.com/")
                     .AllowAnyHeader()
                     .WithMethods("GET", "POST", "PUT", "DELETE")
                     .WithExposedHeaders("*");
@@ -50,7 +50,7 @@ namespace StudentAdminPortal.API
             services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
 
             services.AddDbContext<StudentAdminContext>(options => 
-                options.UseSqlServer(Configuration.GetConnectionString("StudentAdminPortalDb")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IStudentRepository, SqlStudentRepository>();
             services.AddScoped<IImageRepository, LocalStorageImgRepository>();
